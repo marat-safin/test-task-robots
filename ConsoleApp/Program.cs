@@ -1,11 +1,10 @@
-﻿using System;
-
-namespace ConsoleApp;
+﻿namespace ConsoleApp;
 
 class Program
+{
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
-        }
+        Application app = new Application();
+        app.Execute(args);
     }
+}

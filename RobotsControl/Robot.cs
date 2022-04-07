@@ -6,6 +6,6 @@ public class Robot
         Position = position;
         Lost = false;
     }
-    public Position Position { get; }
-    public bool Lost { get; }
+    public Position Position { get; internal set; }
+    public bool Lost { get; internal set; }
 }

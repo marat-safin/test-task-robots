@@ -17,22 +17,8 @@ public class Grid
     public int MaxX { get; }
     public int MaxY { get; }
 
-    internal bool ValidatePosition(Position position)
+    internal bool CheckPositionIsInside(Position position)
     {
-        if (position.X < 0 || position.X > MaxX || position.Y < 0 || position.Y > MaxY)
-        {
-            return false;
-        }
-        switch (position.Direction)
-        {
-            case Direction.North:
-            case Direction.South:
-            case Direction.East:
-            case Direction.West:
-                break;
-            default:
-                return false;
-        }
-        return true;
+        return position.X >= 0 && position.X <= MaxX && position.Y >= 0 && position.Y <= MaxY;
     }
 }

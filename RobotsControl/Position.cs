@@ -1,3 +1,5 @@
+using System;
+
 namespace RobotsControl;
 
 public class Position
@@ -8,7 +10,27 @@ public class Position
         Y = y;
         Direction = direction;
     }
-    public Direction Direction { get; set; }
-    public int X { get; set; }
-    public int Y { get; set; }
+    public Direction Direction { get; }
+    public int X { get; }
+    public int Y { get; }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is Position)
+        {
+            return Equals((Position)obj);
+        }
+        return false;
+    }
+    public bool Equals(Position other)
+    {
+        return other != null && 
+                X == other.X && 
+                Y == other.Y && 
+                Direction == other.Direction;
+    }
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(X, Y, Direction);
+    }
 }

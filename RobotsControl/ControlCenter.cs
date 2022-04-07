@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace RobotsControl;
 
@@ -14,10 +15,17 @@ public class ControlCenter
         }
         SurfaceGrid = grid;
         DangerousPositions = new HashSet<Position>();
+        Robots = new List<Robot>();
     }
 
     private Grid SurfaceGrid { get; }
     private HashSet<Position> DangerousPositions { get; }
+    private List<Robot> Robots { get; }
+
+    public ImmutableList<Robot> GetRobots()
+    {
+        return ImmutableList.Create<Robot>(Robots.ToArray());
+    }
 
     public void ManipulateRobot(Robot robot, List<Command> commands)
     {
@@ -30,7 +38,7 @@ public class ControlCenter
         {
             if (robot.Lost)
             {
-                return;
+                break;
             }
 
             if (DangerousPositions.Contains(robot.Position))
@@ -49,5 +57,7 @@ public class ControlCenter
                 DangerousPositions.Add(robot.Position);
             }
         }
+
+        Robots.Add(robot);
     }
 }

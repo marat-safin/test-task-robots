@@ -33,4 +33,9 @@ public class Position
     {
         return HashCode.Combine(X, Y, Direction);
     }
+
+    public override string ToString()
+    {
+        return $"{X} {Y} {Direction}";
+    }
 }

@@ -29,7 +29,7 @@ public class Application
             i += 2;
         }
 
-        ImmutableList<Robot> robots = control_center.GetRobots();
+        ImmutableList<Robot> robots = control_center.GetProcessedRobots();
         foreach (Robot robot in robots)
         {
             Console.WriteLine(GetRobotStatusString(robot));

@@ -7,6 +7,8 @@ namespace ConsoleApp;
 
 public class Application
 {
+    private const int GRID_MAX_DIMENSION = 50;
+    private const int COMMAND_STRING_MAX_LENGTH = 100;
     public string[] Execute(string[] args)
     {
         if (args.Length < 1)
@@ -23,7 +25,7 @@ public class Application
             string commands_str = args[i + 1];
 
             Robot robot = CreateRobot(robot_position_str);
-            List<Command> commands = ParseCommands(commands_str);
+            List<ICommand> commands = ParseCommands(commands_str);
             control_center.ManipulateRobot(robot, commands);
 
             i += 2;
@@ -50,6 +52,11 @@ public class Application
         if (!Int32.TryParse(parameters[0], out max_x) || !Int32.TryParse(parameters[1], out max_y))
         {
             throw new ArgumentException("Can't parse grid dimension parameters");
+        }
+
+        if (max_x > GRID_MAX_DIMENSION || max_y > GRID_MAX_DIMENSION)
+        {
+            throw new ArgumentOutOfRangeException("Grid dimensions out of range");
         }
         return new Grid(max_x, max_y);
     }
@@ -92,10 +99,16 @@ public class Application
         return new Robot(robot_position);
     }
 
-    private List<Command> ParseCommands(string commands_str)
+    private List<ICommand> ParseCommands(string commands_str)
     {
-        List<Command> commands = new List<Command>();
+        List<ICommand> commands = new List<ICommand>();
         String normalized = commands_str.ToUpper().Trim();
+
+        if (normalized.Length > COMMAND_STRING_MAX_LENGTH)
+        {
+            throw new ArgumentOutOfRangeException("Command string length is out of range");
+        }
+
         foreach (char c in normalized.ToCharArray())
         {
             switch (c)

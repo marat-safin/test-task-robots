@@ -6,13 +6,8 @@ namespace RobotsControl;
 
 public class ControlCenter
 {
-    internal const int MAX_GRID_DIMENSION = 50;
     public ControlCenter(Grid grid)
     {
-        if (grid.MaxX > MAX_GRID_DIMENSION || grid.MaxY > MAX_GRID_DIMENSION)
-        {
-            throw new ArgumentException("Unsupported grid size");
-        }
         SurfaceGrid = grid;
         DangerousPositions = new HashSet<Position>();
         ProcessedRobots = new List<Robot>();
@@ -27,21 +22,21 @@ public class ControlCenter
         return ImmutableList.Create<Robot>(ProcessedRobots.ToArray());
     }
 
-    public void ManipulateRobot(Robot robot, List<Command> commands)
+    public void ManipulateRobot(Robot robot, List<ICommand> commands)
     {
         if (!SurfaceGrid.CheckPositionIsInside(robot.Position))
         {
             throw new ArgumentException("Incorrect initial robot position");
         }
 
-        foreach (Command command in commands)
+        foreach (ICommand command in commands)
         {
             if (robot.Lost)
             {
                 break;
             }
 
-            if (DangerousPositions.Contains(robot.Position) && command is MoveForwardCommand)
+            if (DangerousPositions.Contains(robot.Position) && command.FallOffPossible)
             {
                 continue;
             }

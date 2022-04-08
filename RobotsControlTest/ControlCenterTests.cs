@@ -11,29 +11,11 @@ public class ControCenterTests
 {
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
-    public void TestIncorrectXInConstructor()
-    {
-        Grid grid = new Grid(ControlCenter.MAX_GRID_DIMENSION + 1, 15);
-        ControlCenter control_center = new ControlCenter(grid);
-        Assert.Fail("ArgumentException was expected");
-    }
-
-    [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
-    public void TestIncorrectYInConstructor()
-    {
-        Grid grid = new Grid(10, ControlCenter.MAX_GRID_DIMENSION + 1);
-        ControlCenter control_center = new ControlCenter(grid);
-        Assert.Fail("ArgumentException was expected");
-    }
-
-    [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
     public void TestManipulateRobot_RobotToTheWestOfGrid()
     {
         ControlCenter control_center = new ControlCenter(new Grid(10, 10));
         Robot robot = new Robot(new Position(-1, 5, Direction.North));
-        control_center.ManipulateRobot(robot, new List<Command>());
+        control_center.ManipulateRobot(robot, new List<ICommand>());
         Assert.Fail("ArgumentException was expected");
     }
 
@@ -43,7 +25,7 @@ public class ControCenterTests
     {
         ControlCenter control_center = new ControlCenter(new Grid(10, 10));
         Robot robot = new Robot(new Position(15, 5, Direction.North));
-        control_center.ManipulateRobot(robot, new List<Command>());
+        control_center.ManipulateRobot(robot, new List<ICommand>());
         Assert.Fail("ArgumentException was expected");
     }
 
@@ -53,7 +35,7 @@ public class ControCenterTests
     {
         ControlCenter control_center = new ControlCenter(new Grid(10, 10));
         Robot robot = new Robot(new Position(5, 15, Direction.North));
-        control_center.ManipulateRobot(robot, new List<Command>());
+        control_center.ManipulateRobot(robot, new List<ICommand>());
         Assert.Fail("ArgumentException was expected");
     }
 
@@ -63,7 +45,7 @@ public class ControCenterTests
     {
         ControlCenter control_center = new ControlCenter(new Grid(10, 10));
         Robot robot = new Robot(new Position(5, -1, Direction.North));
-        control_center.ManipulateRobot(robot, new List<Command>());
+        control_center.ManipulateRobot(robot, new List<ICommand>());
         Assert.Fail("ArgumentException was expected");
     }
 
@@ -73,14 +55,14 @@ public class ControCenterTests
         ControlCenter control_center;
         Robot robot1;
         Robot robot2;
-        List<Command> commands1;
-        List<Command> commands2;
+        List<ICommand> commands1;
+        List<ICommand> commands2;
         ImmutableList<Robot> processed_robots;
 
         // One robot, empty commands list
         control_center = new ControlCenter(new Grid(5, 5));
         robot1 = new Robot(new Position(2, 2, Direction.North));
-        commands1 = new List<Command>(0);
+        commands1 = new List<ICommand>(0);
         control_center.ManipulateRobot(robot1, commands1);
         processed_robots = control_center.GetProcessedRobots();
         Assert.AreEqual(1, processed_robots.Count);
@@ -91,7 +73,7 @@ public class ControCenterTests
         // One robot, rotates 360 clockwise
         control_center = new ControlCenter(new Grid(5, 5));
         robot1 = new Robot(new Position(2, 2, Direction.North));
-        commands1 = new List<Command> {
+        commands1 = new List<ICommand> {
             new TurnLeftCommand(),
             new TurnLeftCommand(),
             new TurnLeftCommand(),
@@ -107,7 +89,7 @@ public class ControCenterTests
         // One robot, rotates 360 counterclockwise
         control_center = new ControlCenter(new Grid(5, 5));
         robot1 = new Robot(new Position(2, 2, Direction.North));
-        commands1 = new List<Command> {
+        commands1 = new List<ICommand> {
             new TurnRightCommand(),
             new TurnRightCommand(),
             new TurnRightCommand(),
@@ -123,7 +105,7 @@ public class ControCenterTests
         // One robot rotates 180 and moves 1 time
         control_center = new ControlCenter(new Grid(5, 5));
         robot1 = new Robot(new Position(0, 0, Direction.South));
-        commands1 = new List<Command> {
+        commands1 = new List<ICommand> {
             new TurnRightCommand(),
             new TurnRightCommand(),
             new MoveForwardCommand()
@@ -138,7 +120,7 @@ public class ControCenterTests
         // One robot falls off and ignore further commands
         control_center = new ControlCenter(new Grid(5, 5));
         robot1 = new Robot(new Position(0, 2, Direction.West));
-        commands1 = new List<Command> {
+        commands1 = new List<ICommand> {
             new MoveForwardCommand(),
             new MoveForwardCommand(),
             new MoveForwardCommand()
@@ -154,8 +136,8 @@ public class ControCenterTests
         control_center = new ControlCenter(new Grid(5, 5));
         robot1 = new Robot(new Position(1, 1, Direction.West));
         robot2 = new Robot(new Position(1, 1, Direction.West));
-        commands1 = new List<Command>(0);
-        commands2 = new List<Command>(0);
+        commands1 = new List<ICommand>(0);
+        commands2 = new List<ICommand>(0);
         control_center.ManipulateRobot(robot1, commands1);
         control_center.ManipulateRobot(robot2, commands2);
         processed_robots = control_center.GetProcessedRobots();
@@ -171,8 +153,8 @@ public class ControCenterTests
         control_center = new ControlCenter(new Grid(5, 5));
         robot1 = new Robot(new Position(1, 1, Direction.South));
         robot2 = new Robot(new Position(1, 0, Direction.North));
-        commands1 = new List<Command>(0);
-        commands2 = new List<Command> {
+        commands1 = new List<ICommand>(0);
+        commands2 = new List<ICommand> {
             new MoveForwardCommand(),
             new MoveForwardCommand()
         };
@@ -191,10 +173,10 @@ public class ControCenterTests
         control_center = new ControlCenter(new Grid(5, 5));
         robot1 = new Robot(new Position(5, 0, Direction.East));
         robot2 = new Robot(new Position(4, 0, Direction.East));
-        commands1 = new List<Command> {
+        commands1 = new List<ICommand> {
             new MoveForwardCommand()
         };
-        commands2 = new List<Command> {
+        commands2 = new List<ICommand> {
             new MoveForwardCommand(),
             new MoveForwardCommand(),
             new MoveForwardCommand(),
@@ -216,10 +198,10 @@ public class ControCenterTests
         control_center = new ControlCenter(new Grid(5, 5));
         robot1 = new Robot(new Position(5, 2, Direction.East));
         robot2 = new Robot(new Position(5, 1, Direction.North));
-        commands1 = new List<Command> {
+        commands1 = new List<ICommand> {
             new MoveForwardCommand()
         };
-        commands2 = new List<Command> {
+        commands2 = new List<ICommand> {
             new MoveForwardCommand(),
             new MoveForwardCommand(),
         };

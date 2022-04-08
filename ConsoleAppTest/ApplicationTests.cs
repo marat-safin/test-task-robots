@@ -44,21 +44,30 @@ public class ApplicationTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
+    [ExpectedException(typeof(ArgumentOutOfRangeException))]
     public void TestExecute_GridMaxXOutOfRange()
     {
         Application app = new Application();
         app.Execute(new string[] { "2000000000 10" });
-        Assert.Fail("ArgumentException was expected");
+        Assert.Fail("ArgumentOutOfRangeException was expected");
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
+    [ExpectedException(typeof(ArgumentOutOfRangeException))]
     public void TestExecute_GridMaxYOutOfRange()
     {
         Application app = new Application();
         app.Execute(new string[] { "10 2000000000" });
-        Assert.Fail("ArgumentException was expected");
+        Assert.Fail("ArgumentOutOfRangeException was expected");
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentOutOfRangeException))]
+    public void TestExecute_CommandStringLengthOutOfRange()
+    {
+        Application app = new Application();
+        app.Execute(new string[] { "5 7", "1 1 W", "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" });
+        Assert.Fail("ArgumentOutOfRangeException was expected");
     }
 
     [TestMethod]

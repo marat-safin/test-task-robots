@@ -2,9 +2,9 @@ using System;
 
 namespace RobotsControl;
 
-public class TurnRightCommand : Command
+public class TurnRightCommand : ICommand
 {
-    public override Position Execute(Position current_position)
+    public Position Execute(Position current_position)
     {
         Direction new_direction;
         switch (current_position.Direction)
@@ -25,5 +25,10 @@ public class TurnRightCommand : Command
                 throw new ArgumentException("Unsupported Direction: " + current_position.Direction);
         }
         return new Position(current_position.X, current_position.Y, new_direction);
+    }
+
+    public bool FallOffPossible
+    {
+        get { return false; }
     }
 }

@@ -2,9 +2,9 @@ using System;
 
 namespace RobotsControl;
 
-public class MoveForwardCommand : Command
+public class MoveForwardCommand : ICommand
 {
-    public override Position Execute(Position current_position)
+    public Position Execute(Position current_position)
     {
         int delta_x = 0;
         int delta_y = 0;
@@ -26,5 +26,10 @@ public class MoveForwardCommand : Command
                 throw new ArgumentException("Unsupported Direction: " + current_position.Direction);
         }
         return new Position(current_position.X + delta_x, current_position.Y + delta_y, current_position.Direction);
+    }
+
+    public bool FallOffPossible
+    {
+        get { return true; }
     }
 }

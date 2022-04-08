@@ -12,6 +12,7 @@ public class GridTests
     public void TestIncorrectXInConstructor()
     {
         new Grid(-1, 10);
+        Assert.Fail("ArgumentOutOfRangeException was expected");
     }
 
     [TestMethod]
@@ -19,6 +20,7 @@ public class GridTests
     public void TestIncorrectYInConstructor()
     {
         new Grid(15, -5);
+        Assert.Fail("ArgumentOutOfRangeException was expected");
     }
 
     [TestMethod]

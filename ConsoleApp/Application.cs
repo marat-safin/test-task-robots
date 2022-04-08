@@ -7,7 +7,7 @@ namespace ConsoleApp;
 
 public class Application
 {
-    public void Execute(string[] args)
+    public string[] Execute(string[] args)
     {
         if (args.Length < 1)
         {
@@ -30,10 +30,12 @@ public class Application
         }
 
         ImmutableList<Robot> robots = control_center.GetProcessedRobots();
-        foreach (Robot robot in robots)
+        string[] result_output = new string[robots.Count];
+        for (int index = 0; index < robots.Count; index++)
         {
-            Console.WriteLine(GetRobotStatusString(robot));
+            result_output[index] = GetRobotStatusString(robots[index]);
         }
+        return result_output;
     }
 
     private Grid CreateGrid(string grid_parameters)

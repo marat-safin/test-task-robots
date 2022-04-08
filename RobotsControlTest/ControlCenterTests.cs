@@ -15,6 +15,7 @@ public class ControCenterTests
     {
         Grid grid = new Grid(ControlCenter.MAX_GRID_DIMENSION + 1, 15);
         ControlCenter control_center = new ControlCenter(grid);
+        Assert.Fail("ArgumentException was expected");
     }
 
     [TestMethod]
@@ -23,6 +24,7 @@ public class ControCenterTests
     {
         Grid grid = new Grid(10, ControlCenter.MAX_GRID_DIMENSION + 1);
         ControlCenter control_center = new ControlCenter(grid);
+        Assert.Fail("ArgumentException was expected");
     }
 
     [TestMethod]
@@ -32,6 +34,7 @@ public class ControCenterTests
         ControlCenter control_center = new ControlCenter(new Grid(10, 10));
         Robot robot = new Robot(new Position(-1, 5, Direction.North));
         control_center.ManipulateRobot(robot, new List<Command>());
+        Assert.Fail("ArgumentException was expected");
     }
 
     [TestMethod]
@@ -41,6 +44,7 @@ public class ControCenterTests
         ControlCenter control_center = new ControlCenter(new Grid(10, 10));
         Robot robot = new Robot(new Position(15, 5, Direction.North));
         control_center.ManipulateRobot(robot, new List<Command>());
+        Assert.Fail("ArgumentException was expected");
     }
 
     [TestMethod]
@@ -50,6 +54,7 @@ public class ControCenterTests
         ControlCenter control_center = new ControlCenter(new Grid(10, 10));
         Robot robot = new Robot(new Position(5, 15, Direction.North));
         control_center.ManipulateRobot(robot, new List<Command>());
+        Assert.Fail("ArgumentException was expected");
     }
 
     [TestMethod]
@@ -59,6 +64,7 @@ public class ControCenterTests
         ControlCenter control_center = new ControlCenter(new Grid(10, 10));
         Robot robot = new Robot(new Position(5, -1, Direction.North));
         control_center.ManipulateRobot(robot, new List<Command>());
+        Assert.Fail("ArgumentException was expected");
     }
 
     [TestMethod]

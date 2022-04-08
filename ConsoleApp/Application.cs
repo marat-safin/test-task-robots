@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using RobotsControl;
 
 namespace ConsoleApp;
@@ -31,13 +30,8 @@ public class Application
             i += 2;
         }
 
-        ImmutableList<Robot> robots = control_center.GetProcessedRobots();
-        string[] result_output = new string[robots.Count];
-        for (int index = 0; index < robots.Count; index++)
-        {
-            result_output[index] = GetRobotStatusString(robots[index]);
-        }
-        return result_output;
+        IList<Robot> robots = control_center.GetProcessedRobots();
+        return PrepareOutput(robots);
     }
 
     private Grid CreateGrid(string grid_parameters)
@@ -129,34 +123,41 @@ public class Application
 
         return commands;
     }
-    
-    private string GetRobotStatusString(Robot robot)
+
+    private string[] PrepareOutput(IList<Robot> robots)
     {
-        string direction;
-        switch (robot.Position.Direction)
+        string[] output_lines = new string[robots.Count];
+        for (int i = 0; i < robots.Count; i++)
         {
-            case Direction.North:
-                direction = "N";
-                break;
-            case Direction.South:
-                direction = "S";
-                break;
-            case Direction.West:
-                direction = "W";
-                break;
-            case Direction.East:
-                direction = "E";
-                break;
-            default:
-                throw new ArgumentException("Unknown direction");
-        }
+            Robot robot = robots[i];
 
-        string status = $"{robot.Position.X} {robot.Position.Y} {direction}";
-        if (robot.Lost)
-        {
-            status += " LOST";
-        }
+            string direction;
+            switch (robots[i].Position.Direction)
+            {
+                case Direction.North:
+                    direction = "N";
+                    break;
+                case Direction.South:
+                    direction = "S";
+                    break;
+                case Direction.West:
+                    direction = "W";
+                    break;
+                case Direction.East:
+                    direction = "E";
+                    break;
+                default:
+                    throw new ArgumentException("Unknown direction");
+            }
 
-        return status;
+            string output_line = $"{robot.Position.X} {robot.Position.Y} {direction}";
+            if (robot.Lost)
+            {
+                output_line += " LOST";
+            }
+
+            output_lines[i] = output_line;
+        }
+        return output_lines;
     }
 }

@@ -7,35 +7,42 @@ namespace RobotsControlTest.Commands;
 public class MoveForwardCommandTests
 {
     [TestMethod]
-    public void TestExecute()
+    public void TestExecute_North()
     {
         MoveForwardCommand command = new MoveForwardCommand();
-        Position start;
-        Position expected;
-        Position actual;
-        
-        // Move in North direction
-        start = new Position(1, 1, Direction.North);
-        expected = new Position(1, 2, Direction.North);
-        actual = command.Execute(start);
+        Position start = new Position(1, 1, Direction.North);
+        Position expected = new Position(1, 2, Direction.North);
+        Position actual = command.Execute(start);
         Assert.AreEqual(expected, actual);
+    }
 
-        // Move in South direction
-        start = new Position(1, 1, Direction.South);
-        expected = new Position(1, 0, Direction.South);
-        actual = command.Execute(start);
+    [TestMethod]
+    public void TestExecute_South()
+    {
+        MoveForwardCommand command = new MoveForwardCommand();
+        Position start = new Position(1, 1, Direction.South);
+        Position expected = new Position(1, 0, Direction.South);
+        Position actual = command.Execute(start);
         Assert.AreEqual(expected, actual);
+    }
 
-        // Move in West direction
-        start = new Position(1, 1, Direction.West);
-        expected = new Position(0, 1, Direction.West);
-        actual = command.Execute(start);
+    [TestMethod]
+    public void TestExecute_West()
+    {
+        MoveForwardCommand command = new MoveForwardCommand();
+        Position start = new Position(1, 1, Direction.West);
+        Position expected = new Position(0, 1, Direction.West);
+        Position actual = command.Execute(start);
         Assert.AreEqual(expected, actual);
-        
-        // Move in East direction
-        start = new Position(1, 1, Direction.East);
-        expected = new Position(2, 1, Direction.East);
-        actual = command.Execute(start);
+    }
+
+    [TestMethod]
+    public void TestExecute_East()
+    {
+        MoveForwardCommand command = new MoveForwardCommand();
+        Position start = new Position(1, 1, Direction.East);
+        Position expected = new Position(2, 1, Direction.East);
+        Position actual = command.Execute(start);
         Assert.AreEqual(expected, actual);
     }
 }

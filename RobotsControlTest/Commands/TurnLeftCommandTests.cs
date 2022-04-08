@@ -7,35 +7,42 @@ namespace RobotsControlTest;
 public class TurnLeftCommandTests
 {
     [TestMethod]
-    public void TestExecute()
+    public void TestExecute_NorthToWest()
     {
         TurnLeftCommand command = new TurnLeftCommand();
-        Position start;
-        Position expected;
-        Position actual;
-
-        // North -> West
-        start = new Position(0, 0, Direction.North);
-        expected = new Position(0, 0, Direction.West);
-        actual = command.Execute(start);
+        Position start = new Position(0, 0, Direction.North);
+        Position expected = new Position(0, 0, Direction.West);
+        Position actual = command.Execute(start);
         Assert.AreEqual(expected, actual);
+    }
 
-        // West -> South
-        start = new Position(0, 0, Direction.West);
-        expected = new Position(0, 0, Direction.South);
-        actual = command.Execute(start);
+    [TestMethod]
+    public void TestExecute_WestToSouth()
+    {
+        TurnLeftCommand command = new TurnLeftCommand();
+        Position start = new Position(0, 0, Direction.West);
+        Position expected = new Position(0, 0, Direction.South);
+        Position actual = command.Execute(start);
         Assert.AreEqual(expected, actual);
+    }
 
-        // South -> East
-        start = new Position(0, 0, Direction.South);
-        expected = new Position(0, 0, Direction.East);
-        actual = command.Execute(start);
+    [TestMethod]
+    public void TestExecute_SouthToEast()
+    {
+        TurnLeftCommand command = new TurnLeftCommand();
+        Position start = new Position(0, 0, Direction.South);
+        Position expected = new Position(0, 0, Direction.East);
+        Position actual = command.Execute(start);
         Assert.AreEqual(expected, actual);
+    }
 
-        // East -> North
-        start = new Position(0, 0, Direction.East);
-        expected = new Position(0, 0, Direction.North);
-        actual = command.Execute(start);
+    [TestMethod]
+    public void TestExecute_EastToNorth()
+    {
+        TurnLeftCommand command = new TurnLeftCommand();
+        Position start = new Position(0, 0, Direction.East);
+        Position expected = new Position(0, 0, Direction.North);
+        Position actual = command.Execute(start);
         Assert.AreEqual(expected, actual);
     }
 }

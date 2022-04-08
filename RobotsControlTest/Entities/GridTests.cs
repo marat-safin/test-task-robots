@@ -24,56 +24,82 @@ public class GridTests
     }
 
     [TestMethod]
-    public void TestConstructor()
+    public void TestConstructor_RegularCase()
     {
-        Grid grid;
-
-        grid = new Grid(10, 15);
+        Grid grid = new Grid(10, 15);
         Assert.AreEqual(10, grid.MaxX);
         Assert.AreEqual(15, grid.MaxY);
+    }
 
-        grid = new Grid(0, 0);
+    [TestMethod]
+    public void TestConstructor_SmallestPossibleGrid()
+    {
+        Grid grid = new Grid(0, 0);
         Assert.AreEqual(0, grid.MaxX);
         Assert.AreEqual(0, grid.MaxY);
     }
 
     [TestMethod]
-    public void TestCheckPositionIsInside()
+    public void TestCheckPositionIsInside_RegularCase()
     {
-        Grid grid;
-        Position position;
-
-        grid = new Grid(10, 10);
-        position = new Position(2, 3, Direction.North);
+        Grid grid = new Grid(10, 10);
+        Position position = new Position(2, 3, Direction.North);
         Assert.IsTrue(grid.CheckPositionIsInside(position));
+    }
 
-        grid = new Grid(10, 10);
-        position = new Position(0, 0, Direction.West);
+    [TestMethod]
+    public void TestCheckPositionIsInside_MinimalPossibleCoordinatesInsideGrid()
+    {
+        Grid grid = new Grid(10, 10);
+        Position position = new Position(0, 0, Direction.West);
         Assert.IsTrue(grid.CheckPositionIsInside(position));
+    }
 
-        grid = new Grid(10, 10);
-        position = new Position(10, 10, Direction.South);
+    [TestMethod]
+    public void TestCheckPositionIsInside_MaximalPossibleCoordinatesInsideGrid()
+    {
+        Grid grid = new Grid(10, 10);
+        Position position = new Position(10, 10, Direction.South);
         Assert.IsTrue(grid.CheckPositionIsInside(position));
+    }
 
-        grid = new Grid(0, 0);
-        position = new Position(0, 0, Direction.East);
+    [TestMethod]
+    public void TestCheckPositionIsInside_SinglePointGrid()
+    {
+        Grid grid = new Grid(0, 0);
+        Position position = new Position(0, 0, Direction.East);
         Assert.IsTrue(grid.CheckPositionIsInside(position));
+    }
 
-
-        grid = new Grid(5, 5);
-        position = new Position(-1, 2, Direction.North);
+    [TestMethod]
+    public void TestCheckPositionIsInside_PositionOnTheWestOfGrid()
+    {
+        Grid grid = new Grid(5, 5);
+        Position position = new Position(-1, 2, Direction.North);
         Assert.IsFalse(grid.CheckPositionIsInside(position));
+    }
 
-        grid = new Grid(5, 5);
-        position = new Position(10, 2, Direction.South);
+    [TestMethod]
+    public void TestCheckPositionIsInside_PositionOnTheEastOfGrid()
+    {
+        Grid grid = new Grid(5, 5);
+        Position position = new Position(10, 2, Direction.South);
         Assert.IsFalse(grid.CheckPositionIsInside(position));
+    }
 
-        grid = new Grid(5, 5);
-        position = new Position(3, -5, Direction.North);
+    [TestMethod]
+    public void TestCheckPositionIsInside_PositionOnTheSouthOfGrid()
+    {
+        Grid grid = new Grid(5, 5);
+        Position position = new Position(3, -5, Direction.North);
         Assert.IsFalse(grid.CheckPositionIsInside(position));
+    }
 
-        grid = new Grid(5, 5);
-        position = new Position(3, 15, Direction.North);
+    [TestMethod]
+    public void TestCheckPositionIsInside_PositionOnTheNorthOfGrid()
+    {
+        Grid grid = new Grid(5, 5);
+        Position position = new Position(3, 15, Direction.North);
         Assert.IsFalse(grid.CheckPositionIsInside(position));
     }
 }
